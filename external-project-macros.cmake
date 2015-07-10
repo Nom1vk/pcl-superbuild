@@ -207,6 +207,7 @@ macro(crosscompile_boost2 tag)
     DOWNLOAD_COMMAND ""
     DEPENDS boost-fetch
     BUILD_COMMAND ""
+    INSTALL_COMMAND ""
   )
   ExternalProject_Add_Step(${proj} runshell
     COMMAND cd ${source_prefix}/boost/ && sh build-android.sh
