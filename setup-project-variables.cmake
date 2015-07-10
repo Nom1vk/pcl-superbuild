@@ -7,6 +7,10 @@ find_package(Git REQUIRED)
 
 
 set(vtk_module_defaults
+  -DVTK_ANDROID_BUILD:BOOL=ON
+  -DANDROID_NATIVE_API_LEVEL=21
+  -DANDROID_ARCH_NAME="arm"
+  -DANDROID_NDK=${NDK_ROOT}
   -DVTK_Group_StandAlone:BOOL=OFF
   -DVTK_Group_Rendering:BOOL=OFF
   -DModule_vtkFiltersCore:BOOL=ON
@@ -27,7 +31,7 @@ set(vtk_module_defaults
 
 
 option(BUILD_ANDROID "Build for Android" ON)
-option(BUILD_IOS_DEVICE "Build for iOS device" ON)
+option(BUILD_IOS_DEVICE "Build for iOS device" OFF)
 option(BUILD_IOS_SIMULATOR "Build for iOS simulator" OFF)
 
 

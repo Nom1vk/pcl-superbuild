@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.6)
 project(superbuild NONE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}; -std=c++11")
 
 include(setup-superbuild.cmake)
 
@@ -11,10 +12,8 @@ include(external-project-macros.cmake)
 install_eigen()
 fetch_vtk()
 fetch_pcl()
-fetch_boost()
+fetch_boost2()
 fetch_flann()
-
-compile_vtk()
 
 set(tags)
 
@@ -30,9 +29,9 @@ endif()
 
 foreach(tag ${tags})
   crosscompile_vtk(${tag})
-  crosscompile_boost(${tag})
-  crosscompile_flann(${tag})
-  crosscompile_pcl(${tag})
+  crosscompile_boost2(${tag})
+#  crosscompile_flann(${tag})
+#  crosscompile_pcl(${tag})
 endforeach()
 
 if (BUILD_IOS_DEVICE)

@@ -1,7 +1,7 @@
 
 #
 # force build macro
-#
+# 
 macro(force_build proj)
   ExternalProject_Add_Step(${proj} forcebuild
     COMMAND ${CMAKE_COMMAND} -E remove ${base}/Stamp/${proj}/${proj}-build
@@ -23,7 +23,7 @@ endmacro()
 
 #
 # Eigen fetch and install
-#
+# 
 macro(install_eigen)
   set(eigen_url http://www.vtk.org/files/support/eigen-3.1.0-alpha1.tar.gz)
   set(eigen_md5 c04dedf4ae97b055b6dd2aaa01daf5e9)
@@ -40,13 +40,13 @@ endmacro()
 
 #
 # VTK fetch
-#
+# 
 macro(fetch_vtk)
   ExternalProject_Add(
     vtk-fetch
     SOURCE_DIR ${source_prefix}/vtk
-    GIT_REPOSITORY git://github.com/patmarion/VTK.git
-    GIT_TAG ce4a267
+    GIT_REPOSITORY https://github.com/Nom1vk/VTK.git
+    GIT_TAG 6781e179e0b26ae939c9b75710a305a265e00157
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -55,7 +55,7 @@ endmacro()
 
 #
 # VTK compile
-#
+# 
 macro(compile_vtk)
   set(proj vtk-host)
   ExternalProject_Add(
@@ -75,7 +75,7 @@ endmacro()
 
 #
 # VTK crosscompile
-#
+# 
 macro(crosscompile_vtk tag)
   set(proj vtk-${tag})
   get_toolchain_file(${tag})
@@ -84,7 +84,8 @@ macro(crosscompile_vtk tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/vtk
     DOWNLOAD_COMMAND ""
-    DEPENDS vtk-host
+    INSTALL_COMMAND ""
+    DEPENDS vtk-fetch
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -99,7 +100,7 @@ endmacro()
 
 #
 # FLANN fetch
-#
+# 
 macro(fetch_flann)
   ExternalProject_Add(
     flann-fetch
@@ -114,7 +115,7 @@ endmacro()
 
 #
 # FLANN crosscompile
-#
+# 
 macro(crosscompile_flann tag)
   set(proj flann-${tag})
   get_toolchain_file(${tag})
@@ -127,7 +128,7 @@ macro(crosscompile_flann tag)
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
-     # -DBUILD_SHARED_LIBS:BOOL=OFF
+      -DBUILD_SHARED_LIBS:BOOL=OFF
       -DBUILD_EXAMPLES:BOOL=OFF
       -DBUILD_PYTHON_BINDINGS:BOOL=OFF
       -DBUILD_MATLAB_BINDINGS:BOOL=OFF
@@ -136,10 +137,10 @@ macro(crosscompile_flann tag)
   force_build(${proj})
 endmacro()
 
-
+###################### OLD BOOST MACROS ################################
 #
 # Boost fetch
-#
+# 
 macro(fetch_boost)
   ExternalProject_Add(
     boost-fetch
@@ -154,7 +155,7 @@ endmacro()
 
 #
 # Boost crosscompile
-#
+# 
 macro(crosscompile_boost tag)
 
 
@@ -175,10 +176,46 @@ macro(crosscompile_boost tag)
   force_build(${proj})
 endmacro()
 
+########################## NEW BOOST MACROS ############################
+#
+# Boost fetch
+# 
+macro(fetch_boost2)
+  ExternalProject_Add(
+    boost-fetch
+    SOURCE_DIR ${source_prefix}/boost
+    GIT_REPOSITORY https://github.com/Nom1vk/Boost-for-Android.git
+    GIT_TAG origin/master
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+  )
+endmacro()
+
+#
+# Boost crosscompile
+# 
+macro(crosscompile_boost2 tag)
+
+
+  set(proj boost-${tag})
+  get_toolchain_file(${tag})
+  ExternalProject_Add(
+    ${proj}
+    SOURCE_DIR ${source_prefix}/boost
+    CONFIGURE_COMMAND ""
+    DOWNLOAD_COMMAND ""
+    DEPENDS boost-fetch
+    BUILD_COMMAND ""
+  )
+  ExternalProject_Add_Step(${proj} runshell
+    COMMAND cd ${source_prefix}/boost/ && sh build-android.sh
+  )
+endmacro()
 
 #
 # PCL fetch
-#
+# 
 macro(fetch_pcl)
   ExternalProject_Add(
     pcl-fetch
@@ -193,7 +230,7 @@ endmacro()
 
 #
 # PCL crosscompile
-#
+# 
 macro(crosscompile_pcl tag)
   set(proj pcl-${tag})
   get_toolchain_file(${tag})
