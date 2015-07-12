@@ -206,8 +206,8 @@ macro(crosscompile_boost2 tag)
     CONFIGURE_COMMAND ""
     DOWNLOAD_COMMAND ""
     DEPENDS boost-fetch
-    BUILD_COMMAND COMMAND cd ${source_prefix}/boost/ && sh build-android2.sh -t ${ANDROID_TOOLCHAIN} -b ${BOOST_VERSION} -a ${ANDROID_ABI} -o linux-x86_64
-    INSTALL_COMMAND ""
+    BUILD_COMMAND COMMAND cd ${source_prefix}/boost/ && sh build-android2.sh -t ${ANDROID_TOOLCHAIN} -b ${BOOST_VERSION} -a ${ANDROID_ABI} -o linux-x86_64 -e python
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/boost/build_1_55_0/${ANDROID_ABI}/" "${install_prefix}/boost-android/"
 	)
 endmacro()
 
