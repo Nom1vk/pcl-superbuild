@@ -137,7 +137,7 @@ macro(crosscompile_flann tag)
   force_build(${proj})
 endmacro()
 
-###################### OLD BOOST MACROS ################################
+########################## NEW BOOST MACROS ############################
 #
 # Boost fetch
 # 
@@ -145,8 +145,9 @@ macro(fetch_boost)
   ExternalProject_Add(
     boost-fetch
     SOURCE_DIR ${source_prefix}/boost
-    GIT_REPOSITORY git://github.com/patmarion/boost-build
+    GIT_REPOSITORY https://github.com/Nom1vk/Boost-for-Android.git
     GIT_TAG origin/master
+    UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -164,46 +165,6 @@ macro(crosscompile_boost tag)
   ExternalProject_Add(
     ${proj}
     SOURCE_DIR ${source_prefix}/boost
-    DOWNLOAD_COMMAND ""
-    DEPENDS boost-fetch
-    CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
-      -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
-      -DBUILD_SHARED_LIBS:BOOL=OFF
-  )
-
-  force_build(${proj})
-endmacro()
-
-########################## NEW BOOST MACROS ############################
-#
-# Boost fetch
-# 
-macro(fetch_boost2)
-  ExternalProject_Add(
-    boost-fetch
-    SOURCE_DIR ${source_prefix}/boost
-    GIT_REPOSITORY https://github.com/Nom1vk/Boost-for-Android.git
-    GIT_TAG origin/master
-    UPDATE_COMMAND ""
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-  )
-endmacro()
-
-#
-# Boost crosscompile
-# 
-macro(crosscompile_boost2 tag)
-
-
-  set(proj boost-${tag})
-  get_toolchain_file(${tag})
-  ExternalProject_Add(
-    ${proj}
-    SOURCE_DIR ${source_prefix}/boost
     CONFIGURE_COMMAND ""
     DOWNLOAD_COMMAND ""
     DEPENDS boost-fetch
@@ -213,14 +174,26 @@ macro(crosscompile_boost2 tag)
 endmacro()
 
 #
-# PCL fetch
+#  OLD PCL fetch
 # 
 macro(fetch_pcl)
   ExternalProject_Add(
     pcl-fetch
     SOURCE_DIR ${source_prefix}/pcl
     GIT_REPOSITORY git://github.com/patmarion/PCL.git
-    GIT_TAG origin/android-tag
+    GIT_TAG origin/master
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+  )
+endmacro()
+
+macro(fetch_pcl2)
+  ExternalProject_Add(
+    pcl-fetch
+    SOURCE_DIR ${source_prefix}/pcl
+    GIT_REPOSITORY https://github.com/Nom1vk/pcl.git
+    GIT_TAG origin/master
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -260,6 +233,7 @@ macro(crosscompile_pcl tag)
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
       -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
+      -DBOOST_LIBRARYDIR=${install_prefix}/boost-${tag}/lib/
       -C ${try_run_results_file}
   )
 

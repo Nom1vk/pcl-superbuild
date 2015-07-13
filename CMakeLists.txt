@@ -21,8 +21,8 @@ include(external-project-macros.cmake)
 
 install_eigen()
 fetch_vtk()
-fetch_pcl()
-fetch_boost2()
+fetch_pcl2()
+fetch_boost()
 fetch_flann()
 ### TEST ###
 
@@ -42,7 +42,7 @@ endif()
 
 foreach(tag ${tags})
   crosscompile_vtk(${tag})
-  crosscompile_boost2(${tag})
+  crosscompile_boost(${tag})
   crosscompile_flann(${tag})
   crosscompile_pcl(${tag})
 endforeach()
