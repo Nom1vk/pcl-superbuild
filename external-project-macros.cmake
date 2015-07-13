@@ -84,7 +84,7 @@ macro(crosscompile_vtk tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/vtk
     DOWNLOAD_COMMAND ""
-    INSTALL_COMMAND ""
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${build_prefix}/vtk-android/CMakeExternals/Install/vtk-android/" "${install_prefix}/vtk-android/"
     DEPENDS vtk-fetch
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
@@ -92,9 +92,9 @@ macro(crosscompile_vtk tag)
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DBUILD_TESTING:BOOL=OFF
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
-      -DVTKCompileTools_DIR:PATH=${build_prefix}/vtk-host
+      #-DVTKCompileTools_DIR:PATH=${build_prefix}/vtk-host
       ${vtk_module_defaults}
-      -C ${try_run_results_file}
+      #-C ${try_run_results_file}
   )
 endmacro()
 
@@ -105,7 +105,7 @@ macro(fetch_flann)
   ExternalProject_Add(
     flann-fetch
     SOURCE_DIR ${source_prefix}/flann
-    GIT_REPOSITORY git://github.com/mariusmuja/flann
+    GIT_REPOSITORY https://github.com/Nom1vk/flann
     GIT_TAG cee08ec38a8df7bc70397f10a4d30b9b33518bb4
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
@@ -186,6 +186,7 @@ macro(fetch_boost2)
     SOURCE_DIR ${source_prefix}/boost
     GIT_REPOSITORY https://github.com/Nom1vk/Boost-for-Android.git
     GIT_TAG origin/master
+    UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -206,8 +207,8 @@ macro(crosscompile_boost2 tag)
     CONFIGURE_COMMAND ""
     DOWNLOAD_COMMAND ""
     DEPENDS boost-fetch
-    BUILD_COMMAND COMMAND cd ${source_prefix}/boost/ && sh build-android2.sh -t ${ANDROID_TOOLCHAIN} -b ${BOOST_VERSION} -a ${ANDROID_ABI} -o linux-x86_64 -e python
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/boost/build_1_55_0/${ANDROID_ABI}/" "${install_prefix}/boost-android/"
+    BUILD_COMMAND COMMAND cd ${source_prefix}/boost/ && bash build-android2.sh -t ${ANDROID_TOOLCHAIN} -b ${BOOST_VERSION} -a ${ANDROID_ABI} -o "linux-x86_64" -e python -p "${build_prefix}/boost-android/"
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${build_prefix}/boost-android/build_1_55_0/${ANDROID_ABI}/" "${install_prefix}/boost-android/"
 	)
 endmacro()
 
