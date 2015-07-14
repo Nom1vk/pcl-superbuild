@@ -132,6 +132,7 @@ macro(crosscompile_flann tag)
       -DBUILD_EXAMPLES:BOOL=OFF
       -DBUILD_PYTHON_BINDINGS:BOOL=OFF
       -DBUILD_MATLAB_BINDINGS:BOOL=OFF
+      ${android_cmake_vars}
   )
 
   force_build(${proj})
@@ -158,8 +159,6 @@ endmacro()
 # Boost crosscompile
 # 
 macro(crosscompile_boost tag)
-
-
   set(proj boost-${tag})
   get_toolchain_file(${tag})
   ExternalProject_Add(
@@ -225,6 +224,7 @@ macro(crosscompile_pcl tag)
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
+       ${android_cmake_vars}
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DPCL_SHARED_LIBS:BOOL=OFF
       -DBUILD_visualization:BOOL=OFF
@@ -236,7 +236,6 @@ macro(crosscompile_pcl tag)
       -DBOOST_LIBRARYDIR=${install_prefix}/boost-${tag}/lib/
       -C ${try_run_results_file}
   )
-
   force_build(${proj})
 endmacro()
 

@@ -13,6 +13,13 @@ macro(set_default_build_type build_type)
   set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "Build configuration type" FORCE)
 endmacro()
 
+#This var contains the needed variables for android-toolchain.cmake
+set(android_cmake_vars
+	-DANDROID_NDK=${ANDROID_NDK}
+	-DANDROID_ABI=${ANDROID_ABI}
+	-DANDROID_TOOLCHAIN_NAME=${ANDROID_TOOLCHAIN}
+	-DANDROID_NATIVE_API_LEVEL=${ANDROID_API_VERSION}
+	)
 
 set_default_build_type(Release)
 set(build_type ${CMAKE_BUILD_TYPE})

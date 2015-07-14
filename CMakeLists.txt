@@ -7,12 +7,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}; -std=c++11")
 
 #Introduce some Variables
 set(ANDROID_ARCH "arm" 	  CACHE STRING "Android Target Architecture")
-set(ANDROID_ABI "armeabi" CACHE STRING "Android ABI")
-set(ANDROID_API_VERSION "21" CACHE STRING "Android API Level")
+set(ANDROID_ABI "armeabi-v7a" CACHE STRING "Android ABI")
+set(ANDROID_API_VERSION "19" CACHE STRING "Android API Level")
 set(ANDROID_TOOLCHAIN "arm-linux-androideabi-4.9" CACHE STRING "Android toolchain")
 set(ANDROID_NDK "$ENV{NDK_ROOT}" CACHE PATH "Path to Android NDK")
 set(BOOST_VERSION "1.55.0" CACHE STRING "Boost Version to build")
 
+#Android toolchain variables
+set(ANDROID_NATIVE_API_LEVEL ${ANDROID_API_LEVEL})
+set(ANDROID_TOOLCHAIN_NAME ${ANDROID_TOOLCHAIN})
+ 
 include(setup-superbuild.cmake)
 
 include(setup-project-variables.cmake)
