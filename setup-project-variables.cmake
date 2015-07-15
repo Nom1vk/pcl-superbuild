@@ -12,8 +12,9 @@ set(vtk_module_defaults
   -DANDROID_ABI=${ANDROID_ABI}
   -DANDROID_TOOLCHAIN_NAME=${ANDROID_TOOLCHAIN}
   -DANDROID_NATIVE_API_LEVEL=${ANDROID_API_VERSION}
+  -DOPENGL_ES_VERSION="3.0"
   -DVTK_Group_StandAlone:BOOL=OFF
-  -DVTK_Group_Rendering:BOOL=OFF
+  -DVTK_Group_Rendering:BOOL=ON
   -DModule_vtkFiltersCore:BOOL=ON
   -DModule_vtkFiltersModeling:BOOL=ON
   -DModule_vtkFiltersSources:BOOL=ON
@@ -25,9 +26,12 @@ set(vtk_module_defaults
   -DModule_vtkIOPLY:BOOL=ON
   -DModule_vtkIOInfovis:BOOL=ON
   -DModule_vtkImagingCore:BOOL=ON
+  -DModule_vtkImagingColor:BOOL=OFF
   -DModule_vtkParallelCore:BOOL=ON
   -DModule_vtkRenderingCore:BOOL=ON
-  -DModule_vtkRenderingFreeType:BOOL=ON
+  -DModule_vtkRenderingLOD:BOOL=ON
+  -DModule_vtkRenderingAnnotation:BOOL=OFF
+  -DModule_vtkRenderingFreeType:BOOL=OFF
 )
 
 

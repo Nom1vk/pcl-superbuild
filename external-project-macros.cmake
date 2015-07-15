@@ -46,7 +46,7 @@ macro(fetch_vtk)
     vtk-fetch
     SOURCE_DIR ${source_prefix}/vtk
     GIT_REPOSITORY https://github.com/Nom1vk/VTK.git
-    GIT_TAG 6781e179e0b26ae939c9b75710a305a265e00157
+    GIT_TAG origin/6.2Android
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -219,7 +219,7 @@ macro(crosscompile_pcl tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/pcl
     DOWNLOAD_COMMAND ""
-    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen
+    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen vtk-${tag}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -229,6 +229,7 @@ macro(crosscompile_pcl tag)
       -DPCL_SHARED_LIBS:BOOL=OFF
       -DBUILD_visualization:BOOL=OFF
       -DBUILD_examples:BOOL=OFF
+      -DVTK_DIR=${install_prefix}/vtk-${tag}/lib/cmake/vtk-6.2/
       -DEIGEN_INCLUDE_DIR=${install_prefix}/eigen
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
       -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
