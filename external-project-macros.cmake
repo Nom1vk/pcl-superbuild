@@ -173,21 +173,9 @@ macro(crosscompile_boost tag)
 endmacro()
 
 #
-#  OLD PCL fetch
+# PCL Fetch
 # 
 macro(fetch_pcl)
-  ExternalProject_Add(
-    pcl-fetch
-    SOURCE_DIR ${source_prefix}/pcl
-    GIT_REPOSITORY git://github.com/patmarion/PCL.git
-    GIT_TAG origin/master
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-  )
-endmacro()
-
-macro(fetch_pcl2)
   ExternalProject_Add(
     pcl-fetch
     SOURCE_DIR ${source_prefix}/pcl
@@ -219,7 +207,7 @@ macro(crosscompile_pcl tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/pcl
     DOWNLOAD_COMMAND ""
-    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen vtk-${tag}
+    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen vtk-${tag} ves-${tag}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -245,8 +233,8 @@ macro(fetch_ves)
   ExternalProject_Add(
     ves-fetch
     SOURCE_DIR ${source_prefix}/ves
-    GIT_REPOSITORY git://vtk.org/VES.git
-    GIT_TAG 77c0a4a
+    GIT_REPOSITORY https://github.com/Nom1vk/VES.git
+    GIT_TAG origin/master
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""

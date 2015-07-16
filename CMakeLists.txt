@@ -25,14 +25,11 @@ include(external-project-macros.cmake)
 
 install_eigen()
 fetch_vtk()
-fetch_pcl2()
+fetch_pcl()
 fetch_boost()
 fetch_flann()
 fetch_ves()
-### TEST ###
 
-#hunter_add_package(Boost COMPONENTS system filesystem thread date_time iostreams serialization chrono log)
-### ########
 set(tags)
 
 if(BUILD_ANDROID)
