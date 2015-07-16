@@ -234,7 +234,7 @@ macro(fetch_ves)
     ves-fetch
     SOURCE_DIR ${source_prefix}/ves
     GIT_REPOSITORY https://github.com/Nom1vk/VES.git
-    GIT_TAG origin/master
+    GIT_TAG origin/Android-patched
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
