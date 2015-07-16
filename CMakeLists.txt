@@ -28,6 +28,7 @@ fetch_vtk()
 fetch_pcl2()
 fetch_boost()
 fetch_flann()
+fetch_ves()
 ### TEST ###
 
 #hunter_add_package(Boost COMPONENTS system filesystem thread date_time iostreams serialization chrono log)
@@ -48,6 +49,7 @@ foreach(tag ${tags})
   crosscompile_vtk(${tag})
   crosscompile_boost(${tag})
   crosscompile_flann(${tag})
+  crosscompile_ves(${tag})
   crosscompile_pcl(${tag})
 endforeach()
 

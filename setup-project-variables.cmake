@@ -30,8 +30,8 @@ set(vtk_module_defaults
   -DModule_vtkParallelCore:BOOL=ON
   -DModule_vtkRenderingCore:BOOL=ON
   -DModule_vtkRenderingLOD:BOOL=ON
-  -DModule_vtkRenderingAnnotation:BOOL=OFF
-  -DModule_vtkRenderingFreeType:BOOL=OFF
+  -DModule_vtkRenderingAnnotation:BOOL=ON
+  -DModule_vtkRenderingFreeType:BOOL=ON
 )
 
 
