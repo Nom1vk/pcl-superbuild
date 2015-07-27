@@ -26,11 +26,11 @@ set(vtk_module_defaults
   -DModule_vtkIOPLY:BOOL=ON
   -DModule_vtkIOInfovis:BOOL=ON
   -DModule_vtkImagingCore:BOOL=ON
-  -DModule_vtkImagingColor:BOOL=OFF
+  -DModule_vtkImagingColor:BOOL=ΟΝ
   -DModule_vtkParallelCore:BOOL=ON
   -DModule_vtkRenderingCore:BOOL=ON
   -DModule_vtkRenderingLOD:BOOL=ON
-  -DModule_vtkRenderingAnnotation:BOOL=ON
+  -DModule_vtkRenderingAnnotation:BOOL=OFF
   -DModule_vtkRenderingFreeType:BOOL=ON
 )
 

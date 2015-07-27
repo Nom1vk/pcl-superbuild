@@ -253,6 +253,7 @@ macro(crosscompile_ves tag)
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
+      ${android_cmake_vars}
       -DCMAKE_CXX_FLAGS:STRING=${VES_CXX_FLAGS}
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DVES_USE_VTK:BOOL=ON
