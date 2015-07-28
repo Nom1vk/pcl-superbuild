@@ -135,7 +135,7 @@ macro(crosscompile_flann tag)
       ${android_cmake_vars}
   )
 
-  force_build(${proj})
+  #force_build(${proj})
 endmacro()
 
 ########################## NEW BOOST MACROS ############################
@@ -225,7 +225,7 @@ macro(crosscompile_pcl tag)
       -DBOOST_LIBRARYDIR=${install_prefix}/boost-${tag}/lib/
       -C ${try_run_results_file}
   )
-  force_build(${proj})
+  #force_build(${proj})
 endmacro()
 
 ######### Added VES and Kiwi ##########################################
@@ -262,7 +262,7 @@ macro(crosscompile_ves tag)
       -DEIGEN_INCLUDE_DIR:PATH=${install_prefix}/eigen
       -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
   )
-  force_build(${proj})
+  #force_build(${proj})
 endmacro()
 
 macro(create_pcl_framework)
@@ -271,4 +271,26 @@ macro(create_pcl_framework)
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       DEPENDS pcl-ios-device pcl-ios-simulator
       COMMENT "Creating pcl.framework")
+endmacro()
+
+########## Added PCL Hello World #######################################
+macro(crosscompile_pcl_hello_world tag)
+	set(proj PCLHelloWorld-${tag})
+  get_toolchain_file(${tag})
+  ExternalProject_Add(
+    ${proj}
+    SOURCE_DIR ${source_prefix}/pcl/Android/apps/android/PCLAndroidSample
+    DOWNLOAD_COMMAND ""
+    CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
+      -DCMAKE_BUILD_TYPE:STRING=${build_type}
+      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
+      ${android_cmake_vars}
+      -DPCL_DIR=${install_prefix}/pcl-${tag}
+      -DEIGEN_INCLUDE_DIRS:PATH=${install_prefix}/eigen
+      -DBOOST_ROOT=${install_prefix}/boost-${tag}
+      -DBOOST_LIBRARYDIR=${install_prefix}/boost-${tag}/lib/
+      -DBOOST_INCLUDEDIR=${install_prefix}/boost-${tag}/include/boost-1_55/
+  )
+  #force_build(${proj})
 endmacro()

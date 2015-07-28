@@ -13,6 +13,9 @@ set(ANDROID_TOOLCHAIN "arm-linux-androideabi-4.9" CACHE STRING "Android toolchai
 set(ANDROID_NDK "$ENV{NDK_ROOT}" CACHE PATH "Path to Android NDK")
 set(BOOST_VERSION "1.55.0" CACHE STRING "Boost Version to build")
 
+#option to build apps
+option(BUILD_TEST_APPS "Try to build test applications" ON)
+
 #Android toolchain variables
 set(ANDROID_NATIVE_API_LEVEL ${ANDROID_API_LEVEL})
 set(ANDROID_TOOLCHAIN_NAME ${ANDROID_TOOLCHAIN})
@@ -48,6 +51,9 @@ foreach(tag ${tags})
   crosscompile_flann(${tag})
   crosscompile_ves(${tag})
   crosscompile_pcl(${tag})
+  if(BUILD_TEST_APPS)
+	crosscompile_pcl_hello_world(${tag})
+  endif(BUILD_TEST_APPS)
 endforeach()
 
 if (BUILD_IOS_DEVICE)
