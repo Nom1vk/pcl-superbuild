@@ -207,7 +207,7 @@ macro(crosscompile_pcl tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/pcl
     DOWNLOAD_COMMAND ""
-    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen vtk-${tag} ves-${tag}
+    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen vtk-${tag}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -261,6 +261,7 @@ macro(crosscompile_ves tag)
       -DVTK_DIR:PATH=${install_prefix}/vtk-${tag}/lib/cmake/vtk-6.2/
       -DEIGEN_INCLUDE_DIR:PATH=${install_prefix}/eigen
       -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
+      
   )
   #force_build(${proj})
 endmacro()
@@ -275,22 +276,37 @@ endmacro()
 
 ########## Added PCL Hello World #######################################
 macro(crosscompile_pcl_hello_world tag)
-	set(proj PCLHelloWorld-${tag})
+  set(proj PCLHelloWorld-${tag})
   get_toolchain_file(${tag})
+  get_try_run_results_file(pcl-${tag})
+  
+  # copy the toolchain file and append the boost install dir to CMAKE_FIND_ROOT_PATH
+  set(original_toolchain_file ${toolchain_file})
+  get_filename_component(toolchain_file ${original_toolchain_file} NAME)
+  set(toolchain_file_new ${build_prefix}/${proj}/${toolchain_file})
+  configure_file(${original_toolchain_file} ${toolchain_file_new} COPYONLY)
+  file(APPEND ${toolchain_file_new}
+    "\nlist(APPEND CMAKE_FIND_ROOT_PATH ${install_prefix}/boost-${tag})\n")
+  file(APPEND ${toolchain_file_new}
+    "\nlist(APPEND CMAKE_FIND_ROOT_PATH ${install_prefix}/pcl-${tag})\n")
+  
   ExternalProject_Add(
     ${proj}
     SOURCE_DIR ${source_prefix}/pcl/Android/apps/android/PCLAndroidSample
     DOWNLOAD_COMMAND ""
+    DEPENDS boost-${tag}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
+      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file_new}
       ${android_cmake_vars}
       -DPCL_DIR=${install_prefix}/pcl-${tag}
-      -DEIGEN_INCLUDE_DIRS:PATH=${install_prefix}/eigen
+      -DEIGEN_INCLUDE_DIR=${install_prefix}/eigen
+      -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
+      -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
       -DBOOST_LIBRARYDIR=${install_prefix}/boost-${tag}/lib/
-      -DBOOST_INCLUDEDIR=${install_prefix}/boost-${tag}/include/boost-1_55/
+      -C ${try_run_results_file}
   )
-  #force_build(${proj})
+  force_build(${proj})
 endmacro()
