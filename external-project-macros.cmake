@@ -289,6 +289,8 @@ macro(crosscompile_pcl_hello_world tag)
     "\nlist(APPEND CMAKE_FIND_ROOT_PATH ${install_prefix}/boost-${tag})\n")
   file(APPEND ${toolchain_file_new}
     "\nlist(APPEND CMAKE_FIND_ROOT_PATH ${install_prefix}/pcl-${tag})\n")
+  file(APPEND ${toolchain_file_new}
+    "\nlist(APPEND CMAKE_FIND_ROOT_PATH ${install_prefix}/flann-${tag})\n")
   
   ExternalProject_Add(
     ${proj}
@@ -301,7 +303,7 @@ macro(crosscompile_pcl_hello_world tag)
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file_new}
       ${android_cmake_vars}
       -DPCL_DIR=${install_prefix}/pcl-${tag}
-      -DEIGEN_INCLUDE_DIR=${install_prefix}/eigen
+      -DEIGEN_INCLUDE_DIRS=${install_prefix}/eigen
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
       -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
