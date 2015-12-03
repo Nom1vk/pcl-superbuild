@@ -354,8 +354,8 @@ set(proj momiras-${tag})
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file_new}
-      ${android_cmake_vars}
-      -DOpenCV_DIR=${NVPACK_ROOT}/OpenCV-2.4.8.2-Tegra-sdk/sdk/native/jni
+      ${android_cmake_vars}     
+	  -DMOMIRAS_BUILD_SHARED_LIBS=OFF
       -DPCL_DIR=${install_prefix}/pcl-${tag}
       -DEIGEN_INCLUDE_DIRS=${install_prefix}/eigen
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
