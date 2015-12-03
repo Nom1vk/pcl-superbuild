@@ -13,8 +13,11 @@ set(ANDROID_TOOLCHAIN "arm-linux-androideabi-4.9" CACHE STRING "Android toolchai
 set(ANDROID_NDK "$ENV{NDK_ROOT}" CACHE PATH "Path to Android NDK")
 set(BOOST_VERSION "1.55.0" CACHE STRING "Boost Version to build")
 
+#NVPACK variables to point to opencv
+set(NVPACK_ROOT /home/victor/NVPACK CACHE PATH "NVIDIA Android CodeWorks root")
+
 #option to build apps
-option(BUILD_TEST_APPS "Try to build test applications" ON)
+option(BUILD_TEST_APPS "Try to build test applications" OFF)
 
 #Android toolchain variables
 set(ANDROID_NATIVE_API_LEVEL ${ANDROID_API_LEVEL})
@@ -32,6 +35,7 @@ fetch_pcl()
 fetch_boost()
 fetch_flann()
 fetch_ves()
+fetch_momiras()
 
 set(tags)
 
@@ -51,11 +55,13 @@ foreach(tag ${tags})
   crosscompile_flann(${tag})
   crosscompile_ves(${tag})
   crosscompile_pcl(${tag})
+  crosscompile_momiras(${tag})
   if(BUILD_TEST_APPS)
 	crosscompile_pcl_hello_world(${tag})
   endif(BUILD_TEST_APPS)
 endforeach()
 
+########### NOT WORKING YET ############################################
 if (BUILD_IOS_DEVICE)
   create_pcl_framework()
 endif()

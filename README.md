@@ -24,22 +24,22 @@ If there is some kind of #error “Sorry, no boost threads are available for thi
 
 Add a flag in ./build/CMakeExternals/Source/boost/boost_1_45_0/boost/config/stdlib/libstdcpp3.hpp :
 
-`ifdef __GLIBCXX__ // gcc 3.4 and greater:
-#  if defined(_GLIBCXX_HAVE_GTHR_DEFAULT) \
+`   #ifdef __GLIBCXX__ // gcc 3.4 and greater:
+	#if defined(_GLIBCXX_HAVE_GTHR_DEFAULT) \
         || defined(_GLIBCXX__PTHREADS) \
         || defined(_GLIBCXX_HAS_GTHREADS) // gcc 4.7
-      //
-      // If the std lib has thread support turned on, then turn it on in Boost
-      // as well.  We do this because some gcc-3.4 std lib headers define _REENTANT
-      // while others do not...
-      //`
+    //
+    // If the std lib has thread support turned on, then turn it on in Boost
+    // as well.  We do this because some gcc-3.4 std lib headers define _REENTANT
+    // while others do not...
+    // `
 
 PCL region_growing_rgb.hpp : crashed from failed template deduction and conversion
 from float to float&&
 line ~380 change
 `std::make_pair<int, float>(distances[i_seg], i_seg)`
 to
-`std::make_pair(distances[i_seg], i_seg)
+`std::make_pair(distances[i_seg], i_seg)`
 
 Last error on .png image
 
