@@ -412,7 +412,7 @@ set(proj FXAA-${tag})
     #DEPENDS boost-${tag}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
-      -DCMAKE_BUILD_TYPE:STRING=${build_type}
+      -DCMAKE_BUILD_TYPE:STRING=Debug
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file_new}
       ${android_cmake_vars}     
   )
